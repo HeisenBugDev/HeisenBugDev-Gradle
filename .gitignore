@@ -3,9 +3,6 @@
 build
 gradle-app.setting
 
-# GMCP plugin
-/minecraft
-
 # eclipse
 .settings
 .metadata
@@ -17,3 +14,7 @@ bin
 out
 *.idea
 *.iml
+
+# macos
+._*
+.DS_Store
