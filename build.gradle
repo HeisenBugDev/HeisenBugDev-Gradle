@@ -34,6 +34,60 @@ dependencies {
     compile 'org.apache.httpcomponents:httpmime:4.3.3'
 
     deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
+    deployerJars "org.kuali.maven.wagons:maven-s3-wagon:1.2.2-SNAPSHOT"
 }
 
 artifacts { archives jar }
+
+uploadArchives
+{
+	repositories.mavenDeployer 
+	{
+		configuration = configurations.deployerJars
+		repository(url: "sftp://repo.jadarstudios.com/maven") {
+			//
+			//
+			authentication(userName: System.getenv().username, password: System.getenv().password)
+		}
+		
+		pom.project {
+            name project.archivesBaseName
+			artifactId project.archivesBaseName
+            packaging 'jar'
+            description 'HeisenBugDev-gradle uploads mod artifacts to HeisenBugDev.com'
+            url 'http://heisenbugdev.com/'
+
+            scm {
+                url 'https://github.com/HeisenBugDev/HeisenBugDev-Gradle'
+                connection 'scm:git:git://github.com/HeisenBugDev/HeisenBugDev-Gradle.git'
+                developerConnection 'scm:git:git@github.com:HeisenBugDev/HeisenBugDev-Gradle.git'
+            }
+
+            issueManagement {
+                system 'github'
+                url 'https://github.com/HeisenBugDev/HeisenBugDev-Gradle/issues'
+            }
+
+            licenses {
+                license {
+                    name 'GPL'
+                    url 'https://raw.githubusercontent.com/HeisenBugDev/HeisenBugDev-Gradle/master/LICENSE'
+                    distribution 'repo'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'jadar'
+                    name 'Jadar'
+                    roles { role 'developer' }
+                }
+                developer {
+                    id 'hunterb'
+                    name 'Hunter Boerner'
+                    roles { role 'developer' }
+                }
+            }
+        }
+	}
+}
