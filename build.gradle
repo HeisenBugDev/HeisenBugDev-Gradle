@@ -1,0 +1,39 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+group = 'com.heisenbugdev.gradle'
+version = '1.0'
+archivesBaseName = 'HeisenGradle'
+targetCompatibility = '1.6'
+sourceCompatibility = '1.6'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'version':project.version, 'javaCompliance': project.targetCompatibility
+        attributes 'group':project.group
+    }
+}
+
+configurations {
+    deployerJars
+}
+
+dependencies {
+    compile gradleApi()
+
+    compile 'com.google.code.gson:gson:2.2.4' // JSON parser
+    
+    // http stuff (may not need)
+    compile 'org.apache.httpcomponents:httpclient:4.3.3'
+    compile 'org.apache.httpcomponents:httpmime:4.3.3'
+
+    deployerJars "org.apache.maven.wagon:wagon-ssh:2.2"
+}
+
+artifacts { archives jar }

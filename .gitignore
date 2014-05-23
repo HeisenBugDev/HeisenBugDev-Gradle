@@ -1,2 +1,20 @@
+# gradle
 .gradle
-build/
+build
+gradle-app.setting
+
+# eclipse
+.settings
+.metadata
+.classpath
+.project
+bin
+
+# intellij
+out
+*.idea
+*.iml
+
+# macos
+._*
+.DS_Store
